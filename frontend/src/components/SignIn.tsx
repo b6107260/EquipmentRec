@@ -9,7 +9,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-
+import { createTheme,ThemeProvider } from "@material-ui/core";
 import { SigninInterface } from "../models/ISignin";
 
 function Alert(props: AlertProps) {
@@ -17,11 +17,13 @@ function Alert(props: AlertProps) {
 }
 
 const useStyles = makeStyles((theme) => ({
+
   paper: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    
   },
   avatar: {
     margin: theme.spacing(1),
@@ -34,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  
 }));
 
 function SignIn() {
@@ -44,7 +47,7 @@ function SignIn() {
   const [error, setError] = useState(false);
 
   const login = () => {
-    const apiUrl = "http://localhost:8080/login";
+    const apiUrl = "http://localhost:8080/login/doctor";
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -80,9 +83,11 @@ function SignIn() {
     setError(false);
   };
   
+  
  
   return (
-    <Container component="main" maxWidth="xs">
+    
+    <Container component="main" maxWidth="xs" >
       <Snackbar open={success} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success">
           เข้าสู่ระบบสำเร็จ
@@ -90,19 +95,21 @@ function SignIn() {
       </Snackbar>
       <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="error">
-          รหัสบัตรประชาชนหรือรหัสผ่านไม่ถูกต้อง
+          อีเมลหรือรหัสผ่านไม่ถูกต้อง
         </Alert>
       </Snackbar>
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+        {/*<Avatar className={classes.avatar}>
+        
           <LockOutlinedIcon />
-        </Avatar>
+        </Avatar>*/}
+        <img src="/img/med-jar.png" width="50px"></img>
         <Typography component="h1" variant="h5">
           Sign in
-
+          
         </Typography>
-        *pid:123456789994, password:123456*
+        hint : *Pid:1400011111111, Password:123456*
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"
@@ -142,6 +149,7 @@ function SignIn() {
         </form>
       </div>
     </Container>
+    
   );
 }
 

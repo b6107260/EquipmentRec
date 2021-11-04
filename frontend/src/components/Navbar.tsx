@@ -16,8 +16,6 @@ import { Button,Drawer } from "@material-ui/core";
 import clsx from "clsx"; 
 import HomeIcon from "@material-ui/icons/Home";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-//import MedicationIcon from '@mui/icons-material/Medication';
-//import NoteAltIcon from '@mui/icons-material/NoteAlt';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import CreateIcon from '@mui/icons-material/Create';
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -130,8 +128,8 @@ function Navbar() {
 
   const menu = [
     { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-    { name: "เภสัชกร", icon: <AccountCircleIcon />, path: "/doctors" },
-    { name: "บันทึกการเบิกอุปกรณ์", icon: <InsertDriveFileIcon/>, path: "/requisition_records" },
+    { name: "แพทย์", icon: <AccountCircleIcon />, path: "/doctors" },
+    { name: "บันทึกการเบิกอุปกรณ์", icon: <InsertDriveFileIcon/>, path: "/requisition_record" },
     { name: "สร้างบันทึกการเบิกอุปกรณ์", icon: <CreateIcon />, path: "/requisition_record/create" },
   ];
 
@@ -145,7 +143,7 @@ function Navbar() {
  
   const getDoctor = async () => {
     const uid = Number(localStorage.getItem("uid"));
-    fetch(`${apiUrl}/doctor/${uid}`, requestOptions)
+    fetch(`${apiUrl}/route/GetDoctor/${uid}`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
@@ -182,14 +180,14 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
-          <img src="/img/med-jar.png" width="50px"></img>
+
           <Typography variant="h6" className={classes.title}>
             ระบบบันทึกการเบิกอุปกรณ์ทางการแพทย์
           </Typography>
           <Typography variant="subtitle1" >
             {doctor?.Doctor_name} &nbsp;&nbsp;       
           </Typography>
-          <Button /*color="inherit"*/ 
+          <Button 
           style={{backgroundColor:"#E5E7E9"}}
           onClick={signout}>
             ออกจากระบบ

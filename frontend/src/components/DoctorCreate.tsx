@@ -64,7 +64,7 @@ function DoctorCreate() {
       Password: doctor.Password ?? "",
     };
 
-    const apiUrl = "http://localhost:8080/doctors";
+    const apiUrl = "http://localhost:8080/route/CreateDoctor";
     const requestOptions = {
       method: "POST",
       headers: {

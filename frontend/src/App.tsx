@@ -35,7 +35,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Home from "./components/Home";
 import Doctors from "./components/Doctors";
 import DoctorCreate from "./components/DoctorCreate";
-import ReqRecs from "./components/ReqRecs";
+import ReqRec from "./components/ReqRec";
 import ReqRecCreate from "./components/ReqRecCreate";
 import SignIn from "./components/SignIn";
 import Navbar from "./components/Navbar";
@@ -146,7 +146,7 @@ export default function MiniDrawer() {
               <Route exact path="/" component={Home} />
               <Route exact path="/doctors" component={Doctors} />
               <Route exact path="/doctor/create" component={DoctorCreate} />
-              <Route exact path="/requisition_records" component={ReqRecs} />
+              <Route exact path="/requisition_record" component={ReqRec} />
               <Route
                 exact
                 path="/requisition_record/create"

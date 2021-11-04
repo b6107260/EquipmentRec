@@ -33,7 +33,7 @@ function Doctors() {
   const [users, setUsers] = useState<DoctorInterface[]>([]);
 
   const getUsers = async () => {
-    const apiUrl = "http://localhost:8080/doctors";
+    const apiUrl = "http://localhost:8080/route/ListDoctor";
     const requestOptions = {
       method: "GET",
       headers: {
@@ -68,12 +68,13 @@ function Doctors() {
               color="primary"
               gutterBottom
             >
-              ข้อมูลแพทย์
+              ข้อมูลเภสัชกร
             </Typography>
           </Box>
           <Box>
             <Button
               component={RouterLink}
+              style={{backgroundColor:"#626567"}}
               to="/doctor/create"
               variant="contained"
               color="primary"

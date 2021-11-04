@@ -4,6 +4,7 @@ import {
   makeStyles,
   Theme,
   createStyles,
+  alpha,
 } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
@@ -17,9 +18,10 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Select from "@material-ui/core/Select";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 
-import { AdmissionInterface } from "../models/IAdmission";
+
 import { EquipmentInterface } from "../models/IEquipment";
 import { DoctorInterface } from "../models/IDoctor";
+import { AdmissionInterface } from "../models/IAdmission";
 import { RequisitionInterface } from "../models/IReqRecord";
 import { TextField } from "@material-ui/core";
 
@@ -110,7 +112,7 @@ function ReqRecCreate() {
 
   const getDoctor = async () => {
     const uid = Number(localStorage.getItem("uid"));
-    fetch(`${apiUrl}/doctor/${uid}`, requestOptions)
+    fetch(`${apiUrl}/route/GetDoctor/${uid}`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
@@ -121,8 +123,8 @@ function ReqRecCreate() {
       });
   };
 
-  const  getEquipment = async () => {
-    fetch(`${apiUrl}/equipments`, requestOptions)
+  const getEquipment = async () => {
+    fetch(`${apiUrl}/route/ListEquipment`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
@@ -132,43 +134,9 @@ function ReqRecCreate() {
         }
       });
   };
-  /*
-  const getTreatment = async () => {
-    var tmpTreat =treatments;
-    fetch(`${apiUrl}/treatment_records`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        if (res.data) {
-          console.log("Here is the treatment data");
-          console.log(res.data);
-          //setTreatments(res.data);
-          tmpTreat = res.data;
-        } else {
-          console.log("else");
-        }
-      });
-      fetch(`${apiUrl}/admissions`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        if(res.data){
-          console.log("here is a tmptreat");
-          console.log(tmpTreat);
-          var newTmp = tmpTreat.map((item,index) => {
-            item.Admission = res.data[index];
-            return item;
-          });
-          console.log("here is a newtmp");
-          console.log(newTmp);
-          setTreatments(newTmp);
-        }else{
-            console.log("error admission");
-        }
-      })
-  };*/
   
-
   const getAdmission= async () => {
-    fetch(`${apiUrl}/admissions`, requestOptions)
+    fetch(`${apiUrl}/route/ListAdmission`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
@@ -209,13 +177,14 @@ function ReqRecCreate() {
 
   function submit() {
     let data = {
-    DoctorID: convertType(doctors?.ID),
-    EquipmentID: convertType(reqRecord.EquipmentID),
-     // AdmissionID: convertType(reqRecord.AdmissionID),
-    RecTime: selectedDate,
-    EquipAmount:  convertType(reqRecord.EquipAmount ?? ""),
-    AdmissionID: convertType(reqRecord.AdmissionID),
-    EquipCost:convertType(reqRecord.EquipmentID), 
+        DoctorID: convertType(doctors?.ID),
+        EquipmentID: convertType(reqRecord.EquipmentID),
+         // AdmissionID: convertType(reqRecord.AdmissionID),
+        RecTime: selectedDate,
+        EquipAmount:  convertType(reqRecord.EquipAmount ?? ""),
+        AdmissionID: convertType(reqRecord.AdmissionID),
+        EquipCost:convertType(reqRecord.EquipmentID), 
+
     };
 
     console.log(data)
@@ -229,7 +198,7 @@ function ReqRecCreate() {
       body: JSON.stringify(data),
     };
 
-    fetch(`${apiUrl}/requisition_records`, requestOptionsPost)
+    fetch(`${apiUrl}/route/CreatRequisition`, requestOptionsPost)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
@@ -263,7 +232,7 @@ function ReqRecCreate() {
               color="primary"
               gutterBottom
             >
-              บันทึกการจ่ายยา
+              บันทึกการเบิกอุปกรณ์
             </Typography>
           </Box>
         </Box>
@@ -276,7 +245,10 @@ function ReqRecCreate() {
                 native
                 disabled
                 value={reqRecord.DoctorID}
-            
+               // onChange={handleChange}
+                /*inputProps={{
+                  name: "DoctorID",
+                }}*/
               >
                 <option aria-label="None" value="">
 
@@ -288,7 +260,7 @@ function ReqRecCreate() {
           </Grid>
           <Grid item xs={6}>
             <FormControl fullWidth variant="outlined">
-              <p>รายชื่อผู้ป่วย</p>
+              <p>ใบรับเข้าผู้ป่วยใน</p>
               <Select
                 native
                 value={reqRecord.AdmissionID}
@@ -298,13 +270,13 @@ function ReqRecCreate() {
                 }}
               >
                 <option aria-label="None" value="">
-                  กรุณาระบุชื่อผู้ป่วย
+                  กรุณาเลือกรายชื่อผู้ป่วยใน
                 </option>
                
                 {admissions.map((item: AdmissionInterface) => (
                   <option value={item.ID} key={item.ID}>
-                    {item.ID}   {item.Patient_Name} 
-                  </option>
+                    {item.ID}     {item.PatientName}
+                  </option> 
                 ))}
               </Select>
             </FormControl>
@@ -321,9 +293,9 @@ function ReqRecCreate() {
                 }}
               >
                 <option aria-label="None" value="">
-                  กรุณาระบุอุปกรณ์ที่ต้องการเบิก
+                  กรุณาเลือก
                 </option>
-                {equipments.map((item:EquipmentInterface) => (
+                {equipments.map((item: EquipmentInterface) => (
                   <option value={item.ID} key={item.ID}>
                     {item.Equipment_name}
                   </option>
@@ -353,7 +325,7 @@ function ReqRecCreate() {
                 ))}
               </Select>
             </FormControl>
-          </Grid>          
+          </Grid>        
           <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">
             <p>จำนวน</p>
@@ -368,7 +340,53 @@ function ReqRecCreate() {
               onChange={handleInputChange}
             />
           </FormControl>
-          </Grid> 
+          </Grid> {/*
+          <Grid item xs={6}>
+            <FormControl fullWidth variant="outlined">
+              <p>test</p>
+              <Select
+                native
+                value={reqRecord.AdmissionID}
+                onChange={handleChange}
+                inputProps={{
+                  name: "AdmissionID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณา test
+                </option>
+                {admissions.map((item: AdmissionInterface) => (
+                  <option value={item.ID} key={item.ID}>
+                    {item.PatientID}  {item.Patient_Name}
+                  </option>
+                ))}
+              </Select>
+            </FormControl>
+                </Grid>*/}
+          {/*    field lock
+          <Grid item xs={6}>
+            <FormControl fullWidth variant="outlined">
+              <p>เพลย์ลิสต์</p>
+              <Select
+                native
+                value={reqRecord.AdmissionID}
+                onChange={handleChange}
+                disabled
+                inputProps={{
+                  name: "AdmissionID",
+                }}
+              >
+                <option aria-label="None" value="">
+                  กรุณาเลือกเพลย์ลิสต์
+                </option>
+                <option value={reqRecord?.ID} key={reqRecord?.ID}>
+                  {reqRecord?.Admission?.Patient_Name}
+                </option>
+
+                
+              </Select>
+            </FormControl>
+              </Grid> */}
           <Grid item xs={6}>
             <FormControl fullWidth variant="outlined">
               <p>วันที่และเวลา</p>
