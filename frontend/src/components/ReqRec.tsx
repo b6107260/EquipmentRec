@@ -90,7 +90,7 @@ function ReqRec() {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell align="center" width="10%">
+                <TableCell align="center" width="5%">
                   ลำดับ
                 </TableCell>
                 <TableCell align="center" width="20%">
@@ -102,13 +102,13 @@ function ReqRec() {
                 <TableCell align="center" width="20%">
                   อุปกรณ์ทางการแพทย์
                 </TableCell>
-                <TableCell align="center" width="25%">
+                <TableCell align="center" width="10%">
                   ราคาต่อหน่วย
                 </TableCell>
                 <TableCell align="center" width="5%">
                   จำนวน
                 </TableCell>
-                <TableCell align="center" width="25%">
+                <TableCell align="center" width="20%">
                   วันที่และเวลา
                 </TableCell>
                 </TableRow>
@@ -120,6 +120,7 @@ function ReqRec() {
                   <TableCell align="center">{item.Doctor.Doctor_name}</TableCell>
                   <TableCell align="center">{item.Admission.PatientName}</TableCell>
                   <TableCell align="center">{item.Equipment.Equipment_name}</TableCell>
+                  <TableCell align="center">{item.Equipment.Equipment_cost}</TableCell>
                   <TableCell align="center">{item.EquipAmount}</TableCell>
                   <TableCell align="center">{format((new Date(item.RecTime)), 'dd MMMM yyyy hh:mm a')}</TableCell>
                 </TableRow>

@@ -100,16 +100,13 @@ function SignIn() {
       </Snackbar>
       <CssBaseline />
       <div className={classes.paper}>
-        {/*<Avatar className={classes.avatar}>
-        
-          <LockOutlinedIcon />
-        </Avatar>*/}
-        <img src="/img/med-jar.png" width="50px"></img>
+   
+
         <Typography component="h1" variant="h5">
           Sign in
           
         </Typography>
-        hint : *Pid:1400011111111, Password:123456*
+        hint : *Pid:123456789994, Password:123456*
         <form className={classes.form} noValidate>
           <TextField
             variant="outlined"

@@ -68,7 +68,7 @@ function Doctors() {
               color="primary"
               gutterBottom
             >
-              ข้อมูลเภสัชกร
+              ข้อมูลแพทย์
             </Typography>
           </Box>
           <Box>

@@ -148,21 +148,6 @@ function ReqRecCreate() {
   };
 
 
-/*
-  const getAdmission = async () => {
-    let uid = localStorage.getItem("uid");
-    fetch(`${apiUrl}/playlist/watched/user/${uid}`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => {
-        watchVideo.PlaylistID = res.data.ID
-        if (res.data) {
-          setPlaylists(res.data);
-        } else {
-          console.log("else");
-        }
-      });
-  };*/
-
   useEffect(() => {
     getDoctor();
     getEquipment();
@@ -179,13 +164,12 @@ function ReqRecCreate() {
     let data = {
         DoctorID: convertType(doctors?.ID),
         EquipmentID: convertType(reqRecord.EquipmentID),
-         // AdmissionID: convertType(reqRecord.AdmissionID),
         RecTime: selectedDate,
         EquipAmount:  convertType(reqRecord.EquipAmount ?? ""),
         AdmissionID: convertType(reqRecord.AdmissionID),
-        EquipCost:convertType(reqRecord.EquipmentID), 
+      };
 
-    };
+   
 
     console.log(data)
 
@@ -245,10 +229,6 @@ function ReqRecCreate() {
                 native
                 disabled
                 value={reqRecord.DoctorID}
-               // onChange={handleChange}
-                /*inputProps={{
-                  name: "DoctorID",
-                }}*/
               >
                 <option aria-label="None" value="">
 
@@ -340,53 +320,7 @@ function ReqRecCreate() {
               onChange={handleInputChange}
             />
           </FormControl>
-          </Grid> {/*
-          <Grid item xs={6}>
-            <FormControl fullWidth variant="outlined">
-              <p>test</p>
-              <Select
-                native
-                value={reqRecord.AdmissionID}
-                onChange={handleChange}
-                inputProps={{
-                  name: "AdmissionID",
-                }}
-              >
-                <option aria-label="None" value="">
-                  กรุณา test
-                </option>
-                {admissions.map((item: AdmissionInterface) => (
-                  <option value={item.ID} key={item.ID}>
-                    {item.PatientID}  {item.Patient_Name}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
-                </Grid>*/}
-          {/*    field lock
-          <Grid item xs={6}>
-            <FormControl fullWidth variant="outlined">
-              <p>เพลย์ลิสต์</p>
-              <Select
-                native
-                value={reqRecord.AdmissionID}
-                onChange={handleChange}
-                disabled
-                inputProps={{
-                  name: "AdmissionID",
-                }}
-              >
-                <option aria-label="None" value="">
-                  กรุณาเลือกเพลย์ลิสต์
-                </option>
-                <option value={reqRecord?.ID} key={reqRecord?.ID}>
-                  {reqRecord?.Admission?.Patient_Name}
-                </option>
-
-                
-              </Select>
-            </FormControl>
-              </Grid> */}
+          </Grid>
           <Grid item xs={6}>
             <FormControl fullWidth variant="outlined">
               <p>วันที่และเวลา</p>
@@ -405,7 +339,7 @@ function ReqRecCreate() {
           <Grid item xs={12}>
             <Button
               component={RouterLink}
-              to="/requisition_records"
+              to="/requisition_record"
               variant="contained"
             >
               กลับ
